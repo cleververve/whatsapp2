@@ -22,15 +22,31 @@
 //   );
 // }
 
-import {useEffect} from "react";
+import {Fragment, useEffect, useState} from "react";
 
-const App = ()=>{
-  useEffect(()=>{
-     fetch('/api/getMessages').then((result=>{
-       console.log('getMessages: ',result);
-     }))
-  },[]);
-  return (<div className="App">Hello from React, Serhii!</div>);
+const renderComments = (comments) => {
+    return comments.map((el, i) => <div key={i}>{el.name}</div>)
+}
+
+const App = () => {
+
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/getMessages').then((result => {
+            result.json().then((data) => {
+                console.log('getMessages', data);
+                setComments([...data]);
+            });
+        }))
+    }, []);
+
+
+    return (<Fragment>
+            <div className="App">Hello, Serhii Volynets! It's React</div>
+            {renderComments(comments)}
+        </Fragment>
+    );
 }
 
 
