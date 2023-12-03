@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
+const whRouter = require('./routes/webhook');
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/front/build')));
 
+
+app.use('/webhook',whRouter);
 app.use('/api',apiRouter);
 app.use('/', indexRouter);
 
